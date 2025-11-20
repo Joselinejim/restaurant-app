@@ -17,4 +17,27 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth', 'role:admin'])->group(function () {
+
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+
+    // Rutas necesarias para quitar el error
+    Route::resource('/admin/products', \App\Http\Controllers\Admin\ProductController::class)
+        ->names('admin.products');
+
+    Route::resource('/admin/categories', \App\Http\Controllers\Admin\CategoryController::class)
+        ->names('admin.categories');
+
+    Route::resource('/admin/users', \App\Http\Controllers\Admin\UserController::class)
+        ->names('admin.users');
+});
+
+Route::get('/prueba', function () {
+    return "Ruta cargada correctamente ✔";
+});
+
+
+
 require __DIR__.'/auth.php';
