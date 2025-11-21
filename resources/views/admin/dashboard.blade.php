@@ -1,16 +1,12 @@
-@extends('layouts.admin')
-
-@section('title', 'Dashboard')
-
-@section('content')
-    <h1 class="mb-4">Bienvenido, Administrador</h1>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card shadow-sm p-3">
-                <h4>Total Usuarios</h4>
-                <p>{{ \App\Models\User::count() }}</p>
-            </div>
-        </div>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Bienvenido Administrador') }}
+        </h2>
+    </x-slot>
+    <div class="text-center">
+        <img src="/img/logo.png" class="w-72 mx-auto mb-8">
     </div>
-@endsection
+</x-app-layout>
+ 
+
