@@ -8,11 +8,17 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::all();
-        return view('admin.roles.index', compact('roles'));
+        $search = $request->search;
+
+        $roles = Role::when($search, function ($query) use ($search) {
+            return $query->where('name', 'LIKE', "%$search%");
+        })->get();
+
+        return view('admin.roles.index', compact('roles', 'search'));
     }
+
 
     public function create()
     {

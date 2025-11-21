@@ -1,10 +1,9 @@
-{{-- Usa el layout principal de Breeze --}}
 <x-app-layout>
     
     {{-- Encabezado con título dinámico --}}
     <x-slot name="header">
         <div class="flex items-center space-x-4">
-            <img src="/img/logo.png" class="w-16 h-16">
+            <img src="/img/logo2.png" class="w-16 h-16">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ $title ?? 'Admin' }}
             </h2>

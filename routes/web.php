@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// IMPORTAMOS LAS RUTAS ADMIN
+// IMPORTAMOS TODAS LAS RUTAS ADMIN
 require __DIR__.'/admin.php';
 
 // RUTA DE PRUEBA

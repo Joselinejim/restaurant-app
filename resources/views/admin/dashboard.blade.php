@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-admin-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Bienvenido Administrador') }}
@@ -7,6 +7,6 @@
     <div class="text-center">
         <img src="/img/logo.png" class="w-72 mx-auto mb-8">
     </div>
-</x-app-layout>
+</x-admin-layout>
  
 

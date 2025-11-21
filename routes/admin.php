@@ -1,32 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-// Controllers Admin
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
 
-Route::middleware(['auth', 'role:admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
 
-        // Dashboard Admin
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
 
-        // Productos
-        Route::resource('/products', ProductController::class);
+    // Rutas Admin
+    Route::resource('products', ProductController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
 
-        // Categorías
-        Route::resource('/categories', CategoryController::class);
-
-        // Usuarios
-        Route::resource('/users', UserController::class);
-
-        // Roles (para quitar el error "admin.roles.index")
-        Route::resource('/roles', RoleController::class);
-    });
+});
