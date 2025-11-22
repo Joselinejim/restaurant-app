@@ -8,17 +8,11 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->search;
-
-        $roles = Role::when($search, function ($query) use ($search) {
-            return $query->where('name', 'LIKE', "%$search%");
-        })->get();
-
-        return view('admin.roles.index', compact('roles', 'search'));
+        $roles = Role::all();
+        return view('admin.roles.index', compact('roles'));
     }
-
 
     public function create()
     {
@@ -29,11 +23,16 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:roles,name',
+            'description' => 'nullable|string|max:255',
         ]);
 
-        Role::create(['name' => $request->name]);
+        Role::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'guard_name' => 'web',
+        ]);
 
-        return redirect()->route('admin.roles.index')->with('success', 'Rol creado');
+        return redirect()->route('admin.roles.index')->with('success', 'Rol creado correctamente');
     }
 
     public function edit(Role $role)
@@ -45,11 +44,12 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:roles,name,' . $role->id,
+            'description' => 'nullable|string|max:255',
         ]);
 
-        $role->update(['name' => $request->name]);
+        $role->update($request->only('name', 'description'));
 
-        return redirect()->route('admin.roles.index')->with('success', 'Rol actualizado');
+        return redirect()->route('admin.roles.index')->with('success', 'Rol actualizado correctamente');
     }
 
     public function destroy(Role $role)

@@ -7,11 +7,13 @@
 
                 {{-- LOGO --}}
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center">
-                    <img src="/img/logo2.png" alt="Logo" class="h-6 w-auto rounded-full shadow">
+                    <img src="/img/logo2.png"
+                         alt="Logo"
+                         class="h-6 w-auto rounded-full shadow ml-2">
                 </a>
 
                 {{-- LINKS --}}
-                <div class="hidden sm:flex space-x-8 ml-10">
+                <div class="hidden sm:flex space-x-8 ml-12">
 
                     <x-admin-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         Panel
@@ -41,7 +43,7 @@
 
                             <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
-                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1-414z"
                                     clip-rule="evenodd"/>
                             </svg>
                         </button>
@@ -63,7 +65,7 @@
                 </x-dropdown>
             </div>
 
-            {{-- HAMBURGUESA MÓVIL --}}
+            {{-- HAMBURGUESA --}}
             <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = !open"
                         class="p-2 text-gray-500 hover:bg-gray-100 rounded-md">
