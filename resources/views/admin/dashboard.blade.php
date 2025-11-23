@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
     <div class="text-center">
-        <img src="/img/logo.png" class="w-72 mx-auto mb-8">
+        <img src="/img/logo.png" class="w-100 mx-auto mb-8">
     </div>
 </x-admin-layout>
  

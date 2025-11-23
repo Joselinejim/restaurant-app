@@ -12,23 +12,12 @@
             + Agregar Rol
         </a>
 
+        <input type="text" id="buscar" placeholder="Buscar rol..."
+            class="border px-3 py-2 rounded shadow-sm w-64">
 
-        <!--<input type="text" id="buscar" placeholder="Buscar rol..."
-               class="border px-3 py-2 rounded shadow-sm w-64">-->
-    </div>
-        <div class="mb-4"> 
-        <form method="GET" action="{{ route('admin.roles.index') }}">
-            <input 
-                type="text" 
-                name="search" 
-                placeholder="Buscar rol..."
-                class="w-full sm:w-1/3 px-4 py-2 border rounded-md focus:ring focus:ring-blue-300"
-            >
-        </form>
-        </div>
     </div>
 
-    <div class="bg-white shadow rounded-lg"> <!-- FIX: sin overflow-hidden -->
+    <div class="bg-white shadow rounded-lg"> 
 
         <table class="w-full text-left">
             <thead class="bg-gray-100">
@@ -65,14 +54,24 @@
                                 Eliminar
                             </button>
                         </form>
-
                     </td>
-
                 </tr>
                 @endforeach
             </tbody>
         </table>
-
     </div>
-
+    <div class="mt-4">
+        {{ $roles->links() }}
+    </div>
 </x-admin-layout>
+<script>
+document.getElementById("buscar")?.addEventListener("input", function () {
+    let filtro = this.value.toLowerCase();
+    let filas = document.querySelectorAll("#tablaRoles tr");
+
+    filas.forEach(fila => {
+        let texto = fila.innerText.toLowerCase();
+        fila.style.display = texto.includes(filtro) ? "" : "none";
+    });
+});
+</script>

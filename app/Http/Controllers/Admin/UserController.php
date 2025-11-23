@@ -3,63 +3,74 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $users = User::with('roles')->orderBy('id', 'asc')->paginate(5);
+        return view('admin.users.index', compact('users'));
     }
- 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        //
+        $roles = Role::all();
+        return view('admin.users.create', compact('roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'lastname' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required'
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'lastname' => $request->lastname,
+            'email' => $request->email,
+            'password' => bcrypt('password123') // luego podemos cambiar esto
+        ]);
+
+        $user->assignRole($request->role);
+
+        return redirect()->route('admin.users.index')->with('success', 'Usuario creado');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(User $user)
     {
-        //
+        $roles = Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'lastname' => 'required',
+            'email' => "required|email|unique:users,email,{$user->id}",
+            'role' => 'required'
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'lastname' => $request->lastname,
+            'email' => $request->email
+        ]);
+
+        $user->syncRoles([$request->role]);
+
+        return redirect()->route('admin.users.index')->with('success', 'Usuario actualizado');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(User $user)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $user->delete();
+        return redirect()->route('admin.users.index')->with('success', 'Usuario eliminado');
     }
 }
