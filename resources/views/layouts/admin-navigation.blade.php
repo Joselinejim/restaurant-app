@@ -9,7 +9,7 @@
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center">
                     <img src="/img/logo2.png"
                          alt="Logo"
-                         class="h-6 w-auto rounded-full shadow ml-2">
+                         class="h-12 w-auto ml-2">
                 </a>
 
                 {{-- LINKS --}}
