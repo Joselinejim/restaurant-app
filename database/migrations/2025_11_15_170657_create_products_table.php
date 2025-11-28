@@ -21,6 +21,9 @@ return new class extends Migration
             $table->integer('stock')->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+
         });
     }
 

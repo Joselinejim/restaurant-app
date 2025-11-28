@@ -5,7 +5,7 @@
         <p class="text-gray-500">Actualiza los datos del usuario</p>
     </div>
 
-    <div class="bg-white p-6 rounded-lg shadow">
+    <div class="bg-white p-6 rounded-lg shadow max-w-xl mx-auto">
 
         <form action="{{ route('admin.users.update', $user) }}" method="POST">
             @csrf

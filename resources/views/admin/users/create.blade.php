@@ -5,7 +5,7 @@
         <p class="text-gray-500">Agrega un nuevo usuario al sistema</p>
     </div>
 
-    <div class="bg-white p-6 rounded-lg shadow">
+    <div class="bg-white p-6 rounded-lg shadow max-w-xl mx-auto">
 
         <form action="{{ route('admin.users.store') }}" method="POST">
             @csrf

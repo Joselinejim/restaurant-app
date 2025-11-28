@@ -30,6 +30,9 @@
                     <x-admin-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
                         Roles
                     </x-admin-nav-link>
+                    <x-admin-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                        Categorías
+                    </x-admin-nav-link>
 
                 </div>
             </div>
