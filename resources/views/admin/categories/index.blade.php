@@ -1,13 +1,14 @@
 <x-admin-layout title="Categorías">
-    <div class="text-center mb-6">
-        <h1 class="text-3xl font-bold">Categorías</h1>
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">Gestión de Categorías</h1>
+        <p class="text-gray-500">Administra las categorías del restaurant</p>
     </div>
-
     <div class="flex justify-between items-center mb-4">
         <a href="{{ route('admin.categories.create') }}"
-           class="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700">+ Agregar</a>
+           class="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700">+ Agregar Categoría</a>
 
-        <input type="text" placeholder="Buscar..." class="border px-3 py-2 rounded w-64">
+        <input type="text" id="buscar" placeholder="Buscar categoría..."
+            class="border px-3 py-2 rounded shadow-sm w-64">
     </div>
 
     <div class="bg-white shadow rounded-lg overflow-hidden">
@@ -40,3 +41,15 @@
         </table>
     </div>
 </x-admin-layout>
+
+<script>
+document.getElementById("buscar")?.addEventListener("input", function () {
+    let filtro = this.value.toLowerCase();
+    let filas = document.querySelectorAll("#tablaCategories tr");
+
+    filas.forEach(fila => {
+        let texto = fila.innerText.toLowerCase();
+        fila.style.display = texto.includes(filtro) ? "" : "none";
+    });
+});
+</script>
