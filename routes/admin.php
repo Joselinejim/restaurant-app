@@ -19,3 +19,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('roles', RoleController::class);
 
 });
+Route::post('users/{user}/generate-password', [UserController::class, 'generatePassword'])
+    ->name('admin.users.generatePassword');
+

@@ -45,7 +45,7 @@
 <script>
 document.getElementById("buscar")?.addEventListener("input", function () {
     let filtro = this.value.toLowerCase();
-    let filas = document.querySelectorAll("#tablaCategories tr");
+    let filas = document.querySelectorAll("#tablaCategorias tr");
 
     filas.forEach(fila => {
         let texto = fila.innerText.toLowerCase();

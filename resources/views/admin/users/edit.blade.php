@@ -79,6 +79,15 @@
             </div>
 
         </form>
+        <form action="{{ route('admin.users.generatePassword', $user) }}" method="POST" class="mt-4">
+            @csrf
+            <button 
+                class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md shadow"
+                onclick="return confirm('¿Seguro que deseas generar una nueva contraseña para este usuario?')"
+            >
+                Generar nueva contraseña
+            </button>
+        </form>
 
     </div>
 

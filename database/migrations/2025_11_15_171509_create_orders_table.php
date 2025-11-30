@@ -11,29 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Tabla principal de pedidos
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('table')->nullable();
-            $table->decimal('total', 10, 2)->default(0);
-            $table->enum('status', [
-                'pendiente',
-                'recibido',
-                'en_preparacion',
-                'completado',
-                'cancelado'
-            ])->default('pendiente');
-            $table->timestamps();
-        });
-
-        // Tabla de Items del pedido
-        Schema::create('order_items', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->integer('quantity');
-            $table->decimal('price', 10, 2);
+            $table->string('table')->nullable(); // mesa o lugar
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // mesero que creó la orden
+            $table->string('status')->default('pendiente'); // pendiente, preparando, listo, entregado, cancelado
+            $table->text('cancellation_reason')->nullable();
             $table->timestamps();
         });
     }
@@ -43,7 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_items');
         Schema::dropIfExists('orders');
     }
 };

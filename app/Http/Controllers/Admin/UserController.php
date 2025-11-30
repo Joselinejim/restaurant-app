@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
+use App\Notifications\UserPasswordGenerated;
 
 class UserController extends Controller
 {
@@ -24,22 +25,30 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'lastname' => 'required',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'role' => 'required'
+            'role' => 'required',
         ]);
 
+        // Generar contraseña aleatoria
+        $plainPassword = Str::random(8);
+
+        // Crear el usuario
         $user = User::create([
             'name' => $request->name,
-            'lastname' => $request->lastname,
             'email' => $request->email,
-            'password' => bcrypt('password123') // luego podemos cambiar esto
+            'password' => bcrypt($plainPassword),
         ]);
 
+        // Asignar rol
         $user->assignRole($request->role);
 
-        return redirect()->route('admin.users.index')->with('success', 'Usuario creado');
+        // 📩 ENVIAR CORREO AL USUARIO
+        $user->notify(new UserPasswordGenerated($plainPassword));
+
+        // Mostrar mensaje al admin
+        return redirect()->route('admin.users.index')
+            ->with('success', "Usuario creado correctamente. La contraseña fue enviada al correo del usuario.");
     }
 
     public function edit(User $user)
@@ -73,4 +82,22 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('admin.users.index')->with('success', 'Usuario eliminado');
     }
+    public function generatePassword(User $user)
+    {
+        // Generar nueva contraseña
+        $newPassword = Str::random(8);
+
+        // Guardarla cifrada
+        $user->update([
+            'password' => bcrypt($newPassword),
+        ]);
+
+        // Enviar correo al usuario
+        $user->notify(new UserPasswordGenerated($newPassword));
+
+        // Mostrar mensaje al admin
+        return redirect()->back()
+            ->with('success', "Nueva contraseña generada y enviada al correo del usuario.");
+    }
+
 }
